@@ -13,16 +13,14 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other) 
     {
-        Debug.Log("Hit: " + other.tag);
-        //if other is player
-        //likk player first
-        //then kill me
-        //if other is laser
-        //kill laser and then us
+
         if(other.tag == "Player")
         {
-            
-        }else if(other.tag == "Laser")
+            other.transform.GetComponent<Player>().Damage();
+            Destroy(this.gameObject);
+        }
+        
+        if(other.tag == "Laser")
         {
             Destroy(other.gameObject);
             Destroy(this.gameObject);
