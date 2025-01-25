@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4f;
-    // Start is called before the first frame update
+
     void Start()
     {
         
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    // Update is called once per frame
+
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
