@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
     }
     void Shoot()
     {
-        //if the triple shot is collected, enable triple shot for 5 seconds
            _canFire = Time.time + _fireRate;
         if (_triple_shot)
         {
@@ -64,17 +63,25 @@ public class Player : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+    public void DoubleSpeed()
+    {
+        _speed = 8.5f;
+        StartCoroutine(SpeedRoutine());
+    }
     public void TripleShot()
     {
         _triple_shot = true;
         StartCoroutine(TripleShotRoutine());
 
     }
+    IEnumerator SpeedRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+
+        _speed = 3.5f;
+    }
     IEnumerator TripleShotRoutine()
     {
-
-
-        
          yield return new WaitForSeconds(5.0f);
  
         _triple_shot = false;

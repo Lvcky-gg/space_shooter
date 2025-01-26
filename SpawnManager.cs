@@ -15,8 +15,8 @@ public class SpawnManager : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(SpawnRoutine());
-        StartCoroutine(SpawnTriple());
+        StartCoroutine(SpawnEnemyRoutine());
+        StartCoroutine(SpawnTriplePowerUp());
     }
 
 
@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
         
     }
 
-    IEnumerator SpawnRoutine()
+    IEnumerator SpawnEnemyRoutine()
     {
   
         while (_stopSpawning == false)
@@ -37,13 +37,13 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnTriple()
+    IEnumerator SpawnTriplePowerUp()
     {
 
         while (_stopSpawning == false)
         {
 
-            yield return new WaitForSeconds(Random.Range(10f, 40f));
+            yield return new WaitForSeconds(Random.Range(10f, 15f));
             Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 7, 0);
             GameObject newTriple = Instantiate(_triple_shot, posToSpawn, Quaternion.identity);
             newTriple.transform.parent = _enemyContainer.transform;
