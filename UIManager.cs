@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class UIManager : MonoBehaviour
     private Text _scoreText;
     [SerializeField]
     private Text _gameOverText;
+    [SerializeField]
+    private Text _restartText;
     [SerializeField]
     private Image _LivesImg;
     [SerializeField]
@@ -25,11 +28,18 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_restartText.gameObject.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
+        }
 
     }
     public void SetScore(int score)
     {
-        _gameOverText.text = "";
+        _gameOverText.gameObject.SetActive(false);
         _scoreText.text = "Score:  " + score;
     }
     public void UpdateLives(int currentLives)
@@ -55,7 +65,22 @@ public class UIManager : MonoBehaviour
     void GameOver()
     {
        
+        _gameOverText.gameObject.SetActive(true);
+        _restartText.gameObject.SetActive(true);
+
+        StartCoroutine(GameOverRoutine());
+            
+
+    }
+    IEnumerator GameOverRoutine()
+    {
+        while (true)
+        {
             _gameOverText.text = "GAME OVER";
-        
+            yield return new WaitForSeconds(0.5f);
+            _gameOverText.text = "";
+            yield return new WaitForSeconds(0.5f);
+        }
+
     }
 }
