@@ -68,6 +68,14 @@ public class Player : MonoBehaviour
         if (!_shields)
         {
             _lives--;
+            if( _lives == 2 )
+            {
+                transform.Find("Right_Engine").gameObject.SetActive(true);
+            }
+            if(_lives == 1)
+            {
+                transform.Find("Left_Engine").gameObject.SetActive(true);
+            }
             _uiManager.UpdateLives(_lives);
           
         }
