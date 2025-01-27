@@ -28,14 +28,17 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (_restartText.gameObject.activeSelf)
-        {
-            if (Input.GetKeyDown(KeyCode.R))
+
+        GameOverSequence();
+    }
+    void GameOverSequence()
+    {
+      
+            if (_restartText.gameObject.activeSelf && Input.GetKeyDown(KeyCode.R))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
-        }
-
+        
     }
     public void SetScore(int score)
     {
