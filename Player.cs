@@ -20,18 +20,25 @@ public class Player : MonoBehaviour
     private bool _triple_shot = false;
     [SerializeField]
     private bool _shields = false;
+    [SerializeField]
+    private int _score = 0;
+    private UIManager _uiManager;
 
     void Start()
     {
   
         transform.position = new Vector3(0,0,0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager> ();
-
-        if(_spawnManager == null )
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (_spawnManager == null )
         {
             Debug.LogError("Spawn Manager is null");
         }
-
+        if (_uiManager == null )
+        {
+            Debug.LogError("UI Manager is null");
+        }
+        
     }
 
     void Update()
@@ -61,6 +68,8 @@ public class Player : MonoBehaviour
         if (!_shields)
         {
             _lives--;
+            _uiManager.UpdateLives(_lives);
+          
         }
         else
         {
@@ -93,6 +102,11 @@ public class Player : MonoBehaviour
         _shields = true;
         transform.Find("Shield").gameObject.SetActive(true);
         StartCoroutine(ShieldRoutine());
+    }
+    public void AddToScore(int score)
+    {
+        _score += score;
+        _uiManager.SetScore(_score);
     }
 
     IEnumerator ShieldRoutine()

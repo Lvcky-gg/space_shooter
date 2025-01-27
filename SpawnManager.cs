@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
     {
         if(_frequency > 1)
         {
-            _frequency-=0.5f;
+            _frequency-=0.25f;
         }
         
     }
