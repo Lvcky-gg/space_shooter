@@ -10,7 +10,8 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] powerups;
     [SerializeField]
     private GameObject _enemyContainer;
-
+    [SerializeField]
+    private float _frequency = 5f;
     private bool _stopSpawning = false;
 
     void Start()
@@ -24,6 +25,14 @@ public class SpawnManager : MonoBehaviour
     {
         
     }
+    public void ModFrequency()
+    {
+        if(_frequency > 1)
+        {
+            _frequency-=0.5f;
+        }
+        
+    }
 
     IEnumerator SpawnEnemyRoutine()
     {
@@ -33,7 +42,7 @@ public class SpawnManager : MonoBehaviour
             Vector3 posToSpawn = new Vector3(Random.Range(-8f,8f),7,0);
             GameObject newEnemy = Instantiate(_enemyPrefab, posToSpawn, Quaternion.identity);
             newEnemy.transform.parent = _enemyContainer.transform;
-            yield return new WaitForSeconds(Random.Range(1f,5f));
+            yield return new WaitForSeconds(Random.Range(1f,_frequency));
         }
     }
 

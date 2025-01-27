@@ -38,6 +38,8 @@ public class Enemy : MonoBehaviour
 
         if(transform.position.y <= -5f)
         {
+            GetComponentInParent<SpawnManager>().ModFrequency();
+     
             float randomX = Random.Range(-8f, 8f);
             transform.position = new Vector3(randomX, 7, 0);
         }

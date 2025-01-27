@@ -41,7 +41,7 @@ public class Powerup : MonoBehaviour
                         player.DoubleSpeed();
                         break;
                     case 2:
-                        player.TripleShot();
+                        player.Shield();
                         break;
                     default:
                         break;

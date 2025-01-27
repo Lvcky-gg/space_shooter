@@ -18,9 +18,12 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField]
     private bool _triple_shot = false;
+    [SerializeField]
+    private bool _shields = false;
 
     void Start()
     {
+  
         transform.position = new Vector3(0,0,0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager> ();
 
@@ -55,7 +58,17 @@ public class Player : MonoBehaviour
     }
     public void Damage()
     {
-        _lives--;
+        if (!_shields)
+        {
+            _lives--;
+        }
+        else
+        {
+    
+            transform.Find("Shield").gameObject.SetActive(false);
+            _shields = false;
+        }
+     
 
         if(_lives < 1 )
         {
@@ -74,6 +87,20 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotRoutine());
 
     }
+    public void Shield()
+    {
+   
+        _shields = true;
+        transform.Find("Shield").gameObject.SetActive(true);
+        StartCoroutine(ShieldRoutine());
+    }
+
+    IEnumerator ShieldRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        transform.Find("Shield").gameObject.SetActive(false);
+        _shields = false;
+    }
     IEnumerator SpeedRoutine()
     {
         yield return new WaitForSeconds(5.0f);
@@ -86,6 +113,7 @@ public class Player : MonoBehaviour
  
         _triple_shot = false;
     }
+
 
     void CalculateMovement()
     {
