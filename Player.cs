@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
+    private GameObject _laserSound;
+    [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = -1f;
     [SerializeField]
@@ -61,7 +63,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
-        
+        GameObject las = Instantiate(_laserSound);
+        StartCoroutine(DeleteLaserSoundRoutine(las));
     }
     public void Damage()
     {
@@ -115,6 +118,11 @@ public class Player : MonoBehaviour
     {
         _score += score;
         _uiManager.SetScore(_score);
+    }
+    IEnumerator DeleteLaserSoundRoutine(GameObject laser)
+    {
+        yield return new WaitForSeconds(2.0f);
+        Destroy(laser);
     }
 
     IEnumerator ShieldRoutine()

@@ -7,16 +7,19 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyPrefab;
     [SerializeField]
+    private GameObject _asteroid;
+    [SerializeField]
     private GameObject[] powerups;
     [SerializeField]
     private GameObject _enemyContainer;
     [SerializeField]
     private float _frequency = 5f;
     private bool _stopSpawning = false;
+ 
 
     void Start()
     {
-
+        //StartCoroutine(SpawnAsteroidRoutine());
     }
 
     public void StartSpawning()
@@ -42,6 +45,16 @@ public class SpawnManager : MonoBehaviour
     {
         _frequency = 5f;
     }
+  //  IEnumerator SpawnAsteroidRoutine()
+   // {
+        
+      //  while (_stopSpawning == false)
+       // {
+       //     yield return new WaitForSeconds(Random.Range(2,5));
+       //     Vector3 posToSpawn = new Vector3(Random.Range(-8f, 8f), 3, 0);
+       //       Instantiate(_asteroid, posToSpawn, Quaternion.identity);
+       // }
+   // }
 
     IEnumerator SpawnEnemyRoutine()
     {
