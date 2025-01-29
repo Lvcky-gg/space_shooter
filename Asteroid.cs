@@ -9,14 +9,26 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     private GameObject _explosion;
     private SpawnManager _spawnManager;
-    
+    [SerializeField]
+    private AudioClip _explosionSoundClip;
+    private AudioSource _audioSource;
+
     void Start()
     {
     
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        if(_spawnManager == null )
+        _audioSource = GetComponent<AudioSource>();
+        if (_spawnManager == null )
         {
             Debug.Log("Spawn Manager is null");
+        }
+        if (_audioSource == null)
+        {
+            Debug.LogError("Audio Manager on astereoid is null");
+        }
+        else
+        {
+            _audioSource.clip = _explosionSoundClip;
         }
     }
 
@@ -47,5 +59,6 @@ public class Asteroid : MonoBehaviour
         Instantiate(_explosion, transform.position, Quaternion.identity);
         Destroy(this.gameObject, 0.25f);
         _spawnManager.StartSpawning();
+        AudioSource.PlayClipAtPoint(_explosionSoundClip, transform.position);
     }
 }

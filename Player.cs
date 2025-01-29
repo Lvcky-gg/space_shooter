@@ -11,8 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
-    private GameObject _laserSound;
-    [SerializeField]
     private float _fireRate = 0.15f;
     private float _canFire = -1f;
     [SerializeField]
@@ -25,6 +23,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _score = 0;
     private UIManager _uiManager;
+    [SerializeField]
+    private AudioClip _laserSoundClip;
+    private AudioSource _audioSource;
 
     void Start()
     {
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0,0,0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager> ();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
         if (_spawnManager == null )
         {
             Debug.LogError("Spawn Manager is null");
@@ -40,7 +42,15 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("UI Manager is null");
         }
-        
+        if (_audioSource == null)
+        {
+            Debug.LogError("Audio Manager on player is null");
+        }
+        else
+        {
+            _audioSource.clip = _laserSoundClip;
+        }
+
     }
 
     void Update()
@@ -63,8 +73,9 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
-        GameObject las = Instantiate(_laserSound);
-        StartCoroutine(DeleteLaserSoundRoutine(las));
+        _audioSource?.Play();
+
+
     }
     public void Damage()
     {
@@ -119,11 +130,7 @@ public class Player : MonoBehaviour
         _score += score;
         _uiManager.SetScore(_score);
     }
-    IEnumerator DeleteLaserSoundRoutine(GameObject laser)
-    {
-        yield return new WaitForSeconds(2.0f);
-        Destroy(laser);
-    }
+
 
     IEnumerator ShieldRoutine()
     {
