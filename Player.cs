@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private AudioClip _laserSoundClip;
     private AudioSource _audioSource;
 
+    //lasers will one tap player
     void Start()
     {
   

@@ -11,6 +11,10 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     private AudioClip _explosionSoundClip;
     private AudioSource _audioSource;
+    [SerializeField]
+    private GameObject _laserPrefab;
+    private float _fireRate = 2.0f;
+    private float _canFire = -1;
 
     void Start()
     {
@@ -62,21 +66,39 @@ public class Enemy : MonoBehaviour
             _speed = 0;
             Destroy(this.gameObject,2.3f);
             _audioSource?.Play();
+            Destroy(GetComponent<Collider2D>());
         }
     }
 
     void Update()
     {
+        CalculateMovement();
+        if (Time.time > _canFire)
+        {
+            float rate = GetComponentInParent<SpawnManager>().GetFrequency();
+            _fireRate = Random.Range(rate, rate*2);
+            _canFire = Time.time + _fireRate;
+            GameObject lasers = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] laserArr = lasers.GetComponentsInChildren<Laser>();
+            
+            for(int i = 0;i < laserArr.Length; i++)
+            {
+                laserArr[i].AssignEnemyLaser();
+            }
+        }
+
+    }
+    void CalculateMovement()
+    {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if(transform.position.y <= -5f)
+        if (transform.position.y <= -5f)
         {
             GetComponentInParent<SpawnManager>().ModFrequency();
             //every two time this happens, add a shield to the one that came through
-     
+
             float randomX = Random.Range(-8f, 8f);
             transform.position = new Vector3(randomX, 7, 0);
         }
-
     }
 }

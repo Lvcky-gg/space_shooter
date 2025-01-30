@@ -41,6 +41,10 @@ public class SpawnManager : MonoBehaviour
         }
         
     }
+    public float GetFrequency()
+    {
+        return _frequency;
+    }
     public void ResetFrequency()
     {
         _frequency = 5f;
