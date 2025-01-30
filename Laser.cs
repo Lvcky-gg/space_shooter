@@ -22,7 +22,7 @@ public class Laser : MonoBehaviour
     }
     void MoveDown()
     {
-        transform.Translate(Vector3.down * _speed  * Time.deltaTime);
+        transform.Translate(Vector3.down * 16f  * Time.deltaTime);
        // Debug.Break();
 
         if (transform.position.y <= -7)
@@ -64,6 +64,7 @@ public class Laser : MonoBehaviour
                 //DO NOT DO THIS YOU EVIL BASTARD
                // for(int i = 0; i < 3; i++) {
                     player.Damage();
+                player.AddLife();
                // }
                 
             }

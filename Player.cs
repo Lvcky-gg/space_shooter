@@ -131,6 +131,14 @@ public class Player : MonoBehaviour
         _score += score;
         _uiManager.SetScore(_score);
     }
+    public void AddLife()
+    {
+        if(_lives < 3)
+        {
+            _lives += 1;
+        }
+        
+    }
 
 
     IEnumerator ShieldRoutine()
